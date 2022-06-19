@@ -11,17 +11,15 @@ class stack_over_flow:
         self.site = site
 
     def fromdate(self):
-
+        """Получаем дату начала выборки"""
         dt = datetime.now()
-
-        # getting the timestamp
         ts = int(datetime.timestamp(dt))
         from_ts = ts - 172800
         return from_ts
 
     def stack(self):
+        """Создаем список словарей из имен вопросов и ссылок на них"""
         url = f'{self.host}/2.3/questions'
-        # headers = self.get_headers()
         fromdate = self.fromdate()
         site = self.site
         params = {'fromdate': fromdate,
@@ -31,9 +29,7 @@ class stack_over_flow:
                   'site': site}
 
         response = requests.get(url=url, params=params)
-        # resp_status = response.json().get('href')
         resp_status = response.json().get('items')
-        # pprint(resp_status)
         list_questions = []
         for link in resp_status:
             title_dict = link.get('title')
